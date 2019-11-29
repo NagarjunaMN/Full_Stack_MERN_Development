@@ -1,0 +1,8 @@
+Structure
+-><header>
+-><section>
+-><article>
+-><h1 --- h6>
+-><footer>
+-><main>
+class=>blueprint of object
