@@ -1,0 +1,8 @@
+.project-bord{
+    border-right: 2px solid lightgrey;
+}
+
+.active-proj{
+    color: white !important;
+    border-bottom: 2px solid white;
+}
