@@ -1,4 +1,22 @@
-let mydata = require('../my-data').data
+let mydata = require('../my-data').data;
+const mongoClient = require('mongodb').MongoClient;
+let db;
+mongoClient.connect('mongodb://localhost:27017',{ useUnifiedTopology: true ,useNewUrlParser:true},function(err,client){
+    if(err){
+        console.log("error in mongo",err)
+    }
+    else{
+    console.log("mongodb connected")
+    db = client.db('portfolio')
+    }
+});
+// const client = new MongoClient("mongodb://localhost:27017", { useNewUrlParser: true ,useNewUrlParser:true });
+// client.connect(err => {
+//   console.log("mongo connected")
+//   db = client.db("portfolio")
+  // perform actions on the collection object
+  
+// });
 
 
 module.exports.home = function(req,res) {
@@ -137,10 +155,39 @@ module.exports.admin = function (req,res) {
 }
 
 module.exports.adminProjects = function (req,res) {
-    res.render('admin/projects',{
-        layout:"admin-layout",
-        projects:mydata.myProjects,
-        title:"projects"
+    let projectCollections = db.collection("projects")
+    projectCollections.find().toArray(function (err,data) {
+        if(err){
+            console.log(err)
+        }
+        else{
+            res.render('admin/projects',{
+            layout:"admin-layout",
+            projects:data,
+            title:"projects"
+            })
+        }
+    
+    })
+}
+
+module.exports.adminProjectsDetail = function (req,res,next) {
+    let alias = req.params.alias; 
+    let projectCollection = db.collection('projects')
+    projectCollection.find({alias:alias}).toArray(function (err,data) {
+        if(err){
+            console.log(err)
+            next(err)
+        }
+        else{
+            res.render("admin/projectDetail",{
+                layout:"admin-layout",
+                title:"project-detail",
+                project:data[0]
+        })
+    } 
+    // let project = mydata.myProjects.[0]
+    
     })
 }
 
@@ -158,19 +205,38 @@ module.exports.blogDetail = function (req,res) {
 }
 
 
-module.exports.adminProjectsDetail = function (req,res) {
-    let alias = req.params.alias;
 
-    let project = mydata.myProjects.filter(ele => ele.alias == alias)[0]
-    res.render("admin/projectDetail",{
-        layout:"admin-layout",
-        title:"project-detail",
-        project:project
-    })
-}
 
 module.exports.signout = function (req,res) {
     req.session.isLoggedin = false;
     req.session.user = {}
     res.redirect('/');
+}
+
+
+
+
+module.exports.createNewProject = function (req,res) {
+    res.render("admin/createNewProject",{
+        title:"New Project",
+        layout:"admin-layout"
+    })
+}
+
+
+module.exports.docreateNewProject = function (req,res,next) {
+    let bodyData = req.body
+    bodyData.alias = bodyData.name.split(' ').join('-').toLowerCase()
+    let projectCollection = db.collection('projects')
+    projectCollection.insert(bodyData , function (err,data) {
+        if(err){
+            console.log(err)
+            next()
+        }else{
+        console.log(data)
+        console.log(bodyData)
+        res.redirect('/admin/projects')
+        }
+    })
+    
 }

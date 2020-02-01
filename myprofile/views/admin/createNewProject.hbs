@@ -1,0 +1,62 @@
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 ">
+        <h1 class="h2">Create New Project</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+                <a type="button" class="btn btn-sm btn-outline-secondary">Create New</a>
+                <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+                Upload Demo
+            </button>
+        </div>
+    </div>
+
+    <div >
+        <form action="/admin/projects/create-new" method="POST">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" name="name" id="name" >
+    </div>
+    <div class="form-group col-md-6">
+      <label for="alias">Alias</label>
+      <input type="text" class="form-control" name="alias" id="alias"  readonly>
+    </div>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="githuburl">Github Url</label>
+      <input type="text" class="form-control" name="githubUrl" id="githuburl" >
+    </div>
+    <div class="form-group col-md-6">
+      <label for="tags">Tags</label>
+      <input type="text" class="form-control" name="tags" id="tags" >
+    </div>
+  </div>
+
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+      <label for="description">Description</label>
+      <textarea type="text" class="form-control" rows="7" name="description" id="description"> </textarea>>
+    </div>
+    {{!-- <div class="form-group col-md-6">
+      <label for="tags">Cover</label>
+        {{#if project.image}}
+        <img src="project.img" alt="">
+        <a href="">change image link</a>
+
+        {{else}}
+
+        <a href="">Upload Cover Photo</a>
+        {{/if}} --}}
+      {{!-- </div> --}}
+  </div>
+
+  <button type="submit" class="btn btn-primary">Create New</button>
+</form>
+    </div>
+</main>
