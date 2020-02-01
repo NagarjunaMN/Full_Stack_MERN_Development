@@ -1,0 +1,57 @@
+    <div class="container">
+      <div class="row">
+
+
+        <div class="col-md-3 project-bord">
+            <div class="mb-4">
+              <h5>Links</h5>
+              <button class="btn btn-primary mb-2  ">Live Demo</button>
+              <br>
+              <button class="btn btn-dark">Github Link</button>
+            </div>
+            <hr>
+            <div class="btn-group-sm">
+              <h5>Tags</h5>
+              {{#each project.tags}}
+              <button class="badge badge-{{this.class}}">{{this.name}}</button>
+               {{/each}}
+            </div>
+            <hr>
+            <div class="mb-4">
+              <h5>Related Projects</h5>
+              {{#each project.relatedProjects}}
+              <div><a href='/project/{{this.link}}'>{{this.name}}</a></div>
+              {{/each}}
+            </div>
+            <hr>
+            <div class="mb-4">
+              <h5>Resources</h5>
+              <div><a href='#'>Js console</a></div>
+              <div><a href='#'>Image Gallery</a></div>
+              <div><a href='#'> Bouncing Balls</a></div>
+              <div><a href='#'>Matrix Effect</a></div>
+            </div>
+
+          </div>
+
+
+
+
+          <div class="col-md-9">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/">Home</a></li>
+              <li class="breadcrumb-item"><a href="/project">Projects</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{project.name}}</li>
+            </ol>
+          </nav>
+          <h1>{{project.name}}</h1>
+          <p>{{project.description}}</p>
+          <img src="/images/big_thumb_b32d9ba6ac8966db4efd615536a367fb (2).jpg" alt="{{project.name}}">
+        </div>
+
+
+        </div>
+    </div>
+
+        
