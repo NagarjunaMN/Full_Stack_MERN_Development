@@ -2,9 +2,17 @@ const express = require('express');
 const hbs = require('hbs')
 const app = express();
 const middlewares = require('./middlewares/middleware')
-const routes = require('./Routes/route')
+const mongoose = require('mongoose')
 const session = require('express-session')
 
+const projectRoutes = require('./Routes/projectRoutes')
+const adminRoutes = require('./Routes/adminRoutes')
+const indexRoutes = require('./Routes/route')
+
+
+mongoose.connect('mongodb://localhost:27017/portfolio' ,{useNewUrlParser:true , useUnifiedTopology:true}).then( connectn => {
+    console.log("DB Connected")
+}).catch(err => console.log("some issue with mongoose",err))
 
 
 app.use(express.json());
@@ -24,31 +32,19 @@ app.use(middlewares.logger);
 app.use(express.static(__dirname+'/static'))
 hbs.registerPartials(__dirname+'/views/partials')
 
+app.use('/projects',projectRoutes)
+app.use('/admin',middlewares.authenticate,adminRoutes)
+app.use('/',indexRoutes)
 
+// app.get('/blog',routes.blog)
+// app.get("/blog/:alias",routes.blogDetail)
 
-app.get('/',routes.home)
-app.get('/contact',routes.contact)
-app.post('/contact',routes.doContact)
-app.get('/project',routes.projects)
-app.get('/blog',routes.blog)
-app.get('/signin',routes.signin)
-app.post('/signin',routes.Dosignin)
-app.get('/signup',routes.signup)
-app.post('/signup',routes.Dosignup)
-app.get('/signout',routes.signout)
-app.get('/admin', middlewares.authenticate ,routes.admin)
-app.get('/admin/projects', middlewares.authenticate ,routes.adminProjects)
-app.get("/admin/projects/create-new",middlewares.authenticate,routes.createNewProject)
-app.post("/admin/projects/create-new",middlewares.authenticate,routes.docreateNewProject)
-app.get("/project/:alias",routes.projDetail)
-app.get("/blog/:alias",routes.blogDetail)
-app.get('/admin/projects/:alias', middlewares.authenticate ,routes.adminProjectsDetail)
 
 
 
 
 app.use(middlewares.notFound)
-// app.use(middlewares.errorHandler)
+app.use(middlewares.errorHandler)
 
 
 

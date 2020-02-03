@@ -20,7 +20,7 @@
             <div class="mb-4">
               <h5>Related Projects</h5>
               {{#each project.relatedProjects}}
-              <div><a href='/project/{{this.link}}'>{{this.name}}</a></div>
+              <div><a href='/projects/{{this.link}}'>{{this.name}}</a></div>
               {{/each}}
             </div>
             <hr>
@@ -41,7 +41,7 @@
           <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="/">Home</a></li>
-              <li class="breadcrumb-item"><a href="/project">Projects</a></li>
+              <li class="breadcrumb-item"><a href="/projects">Projects</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{project.name}}</li>
             </ol>
           </nav>
