@@ -25,7 +25,8 @@ let projectSchema = new Schema(
         },
         tags:[{
             name:String,
-            class:String
+            class:String,
+            
         }],
         imageSliders:[String],
         relatedProjects:[{

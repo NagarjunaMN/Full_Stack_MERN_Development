@@ -5,16 +5,16 @@
         <div class="btn-toolbar mb-2 mb-md-0">
             <div class="btn-group mr-2">
                 <a type="button" href="/admin/projects/create-new" class="btn btn-sm btn-outline-secondary">Create New</a>
-                <button type="button" class="btn btn-sm btn-outline-secondary">Delete</button>
+                <a type="button" href="/admin/projects/{{project.alias}}/delete" class="btn btn-sm btn-outline-secondary">Delete</a>
             </div>
-            <button type="button" class="btn btn-sm btn-outline-secondary dropdown-toggle">
+            <a type="button" href="/admin/projects/{{project.alias}}/upload-demo" class="btn btn-sm btn-outline-secondary dropdown-toggle">
                 Upload Demo
-            </button>
+            </a>
         </div>
     </div>
 
     <div >
-        <form>
+        <form action="/admin/projects/{{project.alias}}/update" method="POST">
   <div class="form-row">
     <div class="form-group col-md-6">
       <label for="name">Name</label>
@@ -46,17 +46,17 @@
     <div class="form-group col-md-6">
       <label for="tags">Cover</label>
         {{#if project.image}}
-        <img src="project.img" alt="">
-        <a href="">change image link</a>
+        <img src="{{project.image}}" alt="">
+        <a href="/admin/projects/{{project.alias}}/uploadimg">change image link</a>
 
         {{else}}
 
-        <a href="">Upload Cover Photo</a>
+        <a href="/admin/projects/{{project.alias}}/uploadimg">Upload Cover Photo</a>
         {{/if}}
       </div>
   </div>
 
-  <button type="submit" class="btn btn-primary">Sign in</button>
+  <button type="submit" class="btn btn-primary">Update</button>
 </form>
     </div>
 </main>

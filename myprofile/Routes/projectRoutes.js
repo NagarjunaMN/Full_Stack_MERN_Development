@@ -46,4 +46,14 @@ router.get('/:alias', function (req,res,next) {
 
 })
 
+router.get('/:alias/demo',function (req,res) {
+    let alias = req.params.alias;
+    res.render('demo',{
+        layout:"demo-layout",
+        title:"Live Demo",
+        alias:alias
+
+    })
+})
+
 module.exports = router;

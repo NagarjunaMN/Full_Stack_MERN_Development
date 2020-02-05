@@ -66,16 +66,16 @@ router.post('/contact', function (req,res) {
 })
 
 
-module.exports.blog = function(req,res) {
-    let feauturedBlog = parseInt(Math.random()*mydata.myBlog.length)
-    res.render('blog',{
-        title:"blog",
-        blog:mydata.myBlog,
-        blogCategories:mydata.blogCategories,
-        feauturedBlog:mydata.myBlog[feauturedBlog],
-        navBlog:true
-    })
-}
+// module.exports.blog = function(req,res) {
+//     let feauturedBlog = parseInt(Math.random()*mydata.myBlog.length)
+//     res.render('blog',{
+//         title:"blog",
+//         blog:mydata.myBlog,
+//         blogCategories:mydata.blogCategories,
+//         feauturedBlog:mydata.myBlog[feauturedBlog],
+//         navBlog:true
+//     })
+// }
 
 
 
@@ -137,17 +137,17 @@ router.post('/signup', function (req,res) {
 
 
 
-module.exports.blogDetail = function (req,res) {
-    let alias = req.params.alias;
+// module.exports.blogDetail = function (req,res) {
+//     let alias = req.params.alias;
 
-    let blog = mydata.myBlog.filter(ele => ele.alias == alias)[0]
+//     let blog = mydata.myBlog.filter(ele => ele.alias == alias)[0]
 
-    res.render('blogDetail',{
-        title:blog.name,
-        blog : blog,
-        blogCategories:mydata.blogCategories
-    })
-}
+//     res.render('blogDetail',{
+//         title:blog.name,
+//         blog : blog,
+//         blogCategories:mydata.blogCategories
+//     })
+// }
 
 
 

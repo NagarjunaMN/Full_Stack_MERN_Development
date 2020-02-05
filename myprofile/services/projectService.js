@@ -39,3 +39,19 @@ module.exports.createNewProject = function (bodyData) {
             .catch(err => reject(err))
     })
 }
+
+module.exports.updateProject = function (alias,bodyData) {
+    return new Promise((resolve,reject) => {
+        projectModels.findOneAndUpdate({alias:alias},{$set:bodyData , $inc:{'__v':1}})
+            .then(data => resolve(data))
+            .catch(err => reject(err))
+    })
+}
+
+module.exports.deleteProject = function (alias) {
+    return new Promise((resolve,reject) => {
+        projectModels.findOneAndDelete({alias:alias})
+            .then(data => resolve(data))
+            .catch(err => reject(err))
+    })
+}

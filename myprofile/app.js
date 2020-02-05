@@ -8,7 +8,7 @@ const session = require('express-session')
 const projectRoutes = require('./Routes/projectRoutes')
 const adminRoutes = require('./Routes/adminRoutes')
 const indexRoutes = require('./Routes/route')
-
+const blogRoutes = require('./Routes/blogRoutes')
 
 mongoose.connect('mongodb://localhost:27017/portfolio' ,{useNewUrlParser:true , useUnifiedTopology:true}).then( connectn => {
     console.log("DB Connected")
@@ -35,7 +35,7 @@ hbs.registerPartials(__dirname+'/views/partials')
 app.use('/projects',projectRoutes)
 app.use('/admin',middlewares.authenticate,adminRoutes)
 app.use('/',indexRoutes)
-
+app.use('/blog',blogRoutes)
 // app.get('/blog',routes.blog)
 // app.get("/blog/:alias",routes.blogDetail)
 

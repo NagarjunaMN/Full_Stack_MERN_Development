@@ -5,7 +5,7 @@
         <div class="col-md-3 project-bord">
             <div class="mb-4">
               <h5>Links</h5>
-              <button class="btn btn-primary mb-2  ">Live Demo</button>
+              <a href="/projects/{{project.alias}}/demo" class="btn btn-primary mb-2  ">Live Demo</a>
               <br>
               <button class="btn btn-dark">Github Link</button>
             </div>
@@ -47,7 +47,7 @@
           </nav>
           <h1>{{project.name}}</h1>
           <p>{{project.description}}</p>
-          <img src="/images/big_thumb_b32d9ba6ac8966db4efd615536a367fb (2).jpg" alt="{{project.name}}">
+          <img src="{{project.image}}" alt="{{project.name}}">
         </div>
 
 
