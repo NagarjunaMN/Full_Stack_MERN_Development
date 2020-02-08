@@ -4,6 +4,7 @@ const app = express();
 const middlewares = require('./middlewares/middleware')
 const mongoose = require('mongoose')
 const session = require('express-session')
+const config = require('./config/config')
 
 const projectRoutes = require('./Routes/projectRoutes')
 const adminRoutes = require('./Routes/adminRoutes')
@@ -50,4 +51,4 @@ app.use(middlewares.errorHandler)
 
 
 
-app.listen(3000,() => {console.log("server is running in 3000")});
+app.listen(config.port,() => {console.log("server is running in 3000")});

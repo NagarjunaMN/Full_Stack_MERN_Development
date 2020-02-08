@@ -3,6 +3,12 @@
 
   <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
 
+  {{#if err}}
+ <div class="alert alert-danger" role="alert">
+     {{message}}
+ </div>
+  {{/if}}
+
   <label for="name" class="sr-only">Name</label>
   <input type="text" id="name" name="name" class="form-control" placeholder="Enter Name" required autofocus>
 

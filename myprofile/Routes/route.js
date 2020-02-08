@@ -1,5 +1,7 @@
 let mydata = require('../my-data').data;
 const router = require('express').Router()
+const request = require('request')
+
 
 const mongoClient = require('mongodb').MongoClient;
 let db;
@@ -12,13 +14,6 @@ mongoClient.connect('mongodb://localhost:27017',{ useUnifiedTopology: true ,useN
     db = client.db('portfolio')
     }
 });
-// const client = new MongoClient("mongodb://localhost:27017", { useNewUrlParser: true ,useNewUrlParser:true });
-// client.connect(err => {
-//   console.log("mongo connected")
-//   db = client.db("portfolio")
-  // perform actions on the collection object
-  
-// });
 
 const users = [
     {
@@ -66,16 +61,6 @@ router.post('/contact', function (req,res) {
 })
 
 
-// module.exports.blog = function(req,res) {
-//     let feauturedBlog = parseInt(Math.random()*mydata.myBlog.length)
-//     res.render('blog',{
-//         title:"blog",
-//         blog:mydata.myBlog,
-//         blogCategories:mydata.blogCategories,
-//         feauturedBlog:mydata.myBlog[feauturedBlog],
-//         navBlog:true
-//     })
-// }
 
 
 
@@ -96,58 +81,61 @@ router.get('/signup', function (req,res) {
     })
 })
 
-router.post('/signin', function (req,res) {
+router.post('/signin', function (req,res,next) {
     let body = req.body
-    console.log("Signin value details",body)
-    let user = users.filter(ele => ele.email == body.email)
-    console.log(user)
-    if(user.length > 0){
-        if(user[0].password == body.password){
-            req.session.isLoggedin = true;
-            req.session.user = user[0]
-            res.redirect('/admin')
-        }else{
+    // console.log("Signin value details",body)
+
+    let head = {
+        method:"POST",
+        uri:"http://localhost:3002/api/users/signin",
+        body:body,
+        json:true
+    }
+
+    request(head,function (err,response,body) {
+        if(body.error){         
             res.render('signin',{
                 layout:"Signin-layout",
                 title:"signin",
                 navAdmin:true,
-                message:"Incorrect mail/Password",
+                message:body.error,
                 err:true
-
             })
+        }else{
+            req.session.isLoggedin = true;
+            req.session.user = body.data
+            res.redirect('/admin')            
         }
-    }else{
-        res.render('signin',{
-            layout:"Signin-layout",
-            title:"signin",
-            navAdmin:true,
-            message:"Incorrect email.password",
-            err:true
-        })
+    })
+})       
+
+router.post('/signup', function (req,res,next) {
+    let body = req.body
+
+    let head = {
+        method:"POST",
+        uri : "http://localhost:3002/api/users/signup",
+        body:body,
+        json:true
     }
 
+    request(head,function (err,response,body) {
+        if(body.error){         
+            res.render('signup',{
+                layout:"Signin-layout",
+                title:"signup",
+                navAdmin:true,
+                message:body.error.message,
+                err:true
+            })
+        }else{
+            console.log(JSON.stringify(body))
+            res.redirect('/signin')
+        }
+    })
+    // console.log("Signup details",body)
+    // res.redirect('/signin')
 })
-
-router.post('/signup', function (req,res) {
-    let body = req.body
-    console.log("Signup details",body)
-    res.redirect('/signin')
-})
-
-
-
-
-// module.exports.blogDetail = function (req,res) {
-//     let alias = req.params.alias;
-
-//     let blog = mydata.myBlog.filter(ele => ele.alias == alias)[0]
-
-//     res.render('blogDetail',{
-//         title:blog.name,
-//         blog : blog,
-//         blogCategories:mydata.blogCategories
-//     })
-// }
 
 
 
@@ -155,7 +143,7 @@ router.post('/signup', function (req,res) {
 router.get('/signout', function (req,res) {
     req.session.isLoggedin = false;
     req.session.user = {}
-    res.redirect('/');
+    res.redirect('/signin');
 })
 
 
